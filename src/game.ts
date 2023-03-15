@@ -1,5 +1,5 @@
 import { Options } from './types.ts'
-import { isGameOver, move, getBoard } from './util/chess.ts'
+import { getBoard, isGameOver, move } from './util/chess.ts'
 import { getMove } from './util/prompt.ts'
 import calculateMove from './ai/main.ts'
 
