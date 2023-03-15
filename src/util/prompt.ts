@@ -11,8 +11,12 @@ const validateMove = (move: string): boolean | string => {
 }
 
 export const getMove = async (): Promise<Move> => {
+  const possibleMoves = getPossibleMoves()
+
   const move = await Input.prompt({
     message: 'What is your move?',
+    list: true,
+    suggestions: possibleMoves,
     validate: validateMove,
   })
 

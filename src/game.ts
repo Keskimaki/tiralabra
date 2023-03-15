@@ -3,8 +3,15 @@ import { isGameOver, move, getBoard } from './util/chess.ts'
 import { getMove } from './util/prompt.ts'
 import calculateMove from './ai/main.ts'
 
+const showBoard = () => {
+  const board = getBoard()
+
+  console.clear()
+  console.log(board)
+}
+
 const playerTurn = async () => {
-  console.log(getBoard())
+  showBoard()
 
   const playerMove = await getMove()
   move(playerMove)

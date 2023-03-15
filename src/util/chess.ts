@@ -12,7 +12,7 @@ export const isGameOver = () => chess.isGameOver()
 
 export const getBoard = () => chess.ascii()
 
-export const getPossibleMoves = () => chess.moves()
+export const getPossibleMoves = (): Move[] => chess.moves()
 
 export const getRandomMove = (): Move => {
   const moves = getPossibleMoves()
