@@ -12,8 +12,10 @@ export const isGameOver = () => chess.isGameOver()
 
 export const getBoard = () => chess.ascii()
 
+export const getPossibleMoves = () => chess.moves()
+
 export const getRandomMove = (): Move => {
-  const moves = chess.moves()
+  const moves = getPossibleMoves()
   const randomIndex = Math.floor(Math.random() * moves.length)
 
   return moves[randomIndex]
