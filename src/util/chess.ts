@@ -1,15 +1,13 @@
 import { Chess } from 'chess'
 
-export const randomGame = () => {
-  const chess = new Chess()
+import { Move } from '../types.ts'
 
-  while (!chess.isGameOver()) {
-    const moves = chess.moves()
-    const move = moves[Math.floor(Math.random() * moves.length)]
-    chess.move(move)
+const chess = new Chess()
 
-    console.log(chess.ascii())
-  }
-
-  return chess
+export const move = (move: Move) => {
+   chess.move(move, { strict: true })
 }
+
+export const isGameOver = () => chess.isGameOver()
+
+export const getBoard = () => chess.ascii()

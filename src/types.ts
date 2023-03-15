@@ -6,3 +6,5 @@ export enum Color {
 export interface Options {
   color: Color
 }
+
+export type Move = string
