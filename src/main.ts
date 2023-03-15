@@ -1,11 +1,12 @@
 import { Command, EnumType } from 'cliffy/command/mod.ts'
 
 import { Color, Options } from './types.ts'
+import { randomGame } from './util/chess.ts'
 
 const colorType = new EnumType(Color)
 
-const start = (options: Options) => {
-  console.log(options)
+const start = (_options: Options) => {
+  randomGame()
 }
 
 await new Command()

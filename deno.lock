@@ -61,5 +61,16 @@
     "https://deno.land/x/cliffy@v0.25.7/table/row.ts": "5f519ba7488d2ef76cbbf50527f10f7957bfd668ce5b9169abbc44ec88302645",
     "https://deno.land/x/cliffy@v0.25.7/table/table.ts": "ec204c9d08bb3ff1939c5ac7412a4c9ed7d00925d4fc92aff9bfe07bd269258d",
     "https://deno.land/x/cliffy@v0.25.7/table/utils.ts": "187bb7dcbcfb16199a5d906113f584740901dfca1007400cba0df7dcd341bc29"
+  },
+  "npm": {
+    "specifiers": {
+      "chess.js@1.0.0-beta.3": "chess.js@1.0.0-beta.3"
+    },
+    "packages": {
+      "chess.js@1.0.0-beta.3": {
+        "integrity": "sha512-zu8QVvP0BmMzrstlsrXL2LxdHfAkrtyNftVRaJXGI5mn2ZSsgTJujvZx5BVJsPMwBkRZ+omCdZkVyVLBlKn2HA==",
+        "dependencies": {}
+      }
+    }
   }
 }
