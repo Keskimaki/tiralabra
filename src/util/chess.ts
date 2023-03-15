@@ -11,3 +11,10 @@ export const move = (move: Move) => {
 export const isGameOver = () => chess.isGameOver()
 
 export const getBoard = () => chess.ascii()
+
+export const getRandomMove = (): Move => {
+  const moves = chess.moves()
+  const randomIndex = Math.floor(Math.random() * moves.length)
+
+  return moves[randomIndex]
+}
