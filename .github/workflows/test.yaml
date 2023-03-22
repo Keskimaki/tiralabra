@@ -21,3 +21,6 @@ jobs:
         with:
           deno-version: v1.x
       - run: deno test
+
+  coverage:
+    uses: codecov/codecov-action@v3
