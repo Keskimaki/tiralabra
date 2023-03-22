@@ -8,6 +8,10 @@ export const move = (move: Move) => {
   chess.move(move, { strict: true })
 }
 
+export const undo = () => {
+  chess.undo()
+}
+
 export const isGameOver = () => chess.isGameOver()
 
 export const getBoard = () => chess.ascii()
