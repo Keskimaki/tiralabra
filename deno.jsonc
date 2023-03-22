@@ -3,7 +3,7 @@
     "run": "deno run --allow-read --allow-env --allow-net src/main.ts",
     "dev": "deno run --allow-read --allow-env --allow-net --watch src/main.ts",
     "test": "deno test --coverage=coverage",
-    "coverage": "deno coverage coverage/"
+    "coverage": "deno coverage coverage/ --lcov > coverage.lcov"
   },
   "importMap": "./import_map.json",
   "fmt": {
