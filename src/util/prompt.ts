@@ -1,4 +1,4 @@
-import { Input } from 'cliffy/prompt/mod.ts'
+import { Input, Confirm } from 'cliffy/prompt/mod.ts'
 
 import { Move } from '../types.ts'
 import { getPossibleMoves } from '../util/chess.ts'
@@ -21,4 +21,12 @@ export const getMove = async (): Promise<Move> => {
   })
 
   return move
+}
+
+export const waitForPlayer = async (): Promise<boolean> => {
+  const confirm = await Confirm.prompt({
+    message: 'Continue',
+  })
+
+  return confirm
 }

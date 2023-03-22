@@ -1,7 +1,9 @@
 import { Options } from './types.ts'
-import { getBoard, isGameOver, move } from './util/chess.ts'
-import { getMove } from './util/prompt.ts'
+import { getBoard, isGameOver, move, UciToAlgebraic } from './util/chess.ts'
+import { waitForPlayer } from './util/prompt.ts'
 import calculateMove from './ai/main.ts'
+
+import { botMove, getCurrentGame, getGameState } from './util/lichess.ts'
 
 const showBoard = () => {
   const board = getBoard()
@@ -10,11 +12,16 @@ const showBoard = () => {
   console.log(board)
 }
 
-const playerTurn = async () => {
+const playerTurn = async (gameId: string) => {
   showBoard()
 
-  const playerMove = await getMove()
-  move(playerMove)
+  const confirm = await waitForPlayer()
+  if (!confirm) Deno.exit(0)
+
+  const gameState = await getGameState(gameId)
+  const playerMove = gameState.state.moves.split(' ').at(-1)
+
+  move(UciToAlgebraic(playerMove))
 }
 
 const aiTurn = async (gameId: string) => {
@@ -25,11 +32,10 @@ const aiTurn = async (gameId: string) => {
 }
 
 export const run = async (_options: Options) => {
-  const botStatus = await getStatus()
-  const gameId = botStatus.playing.split('/').at(-2)
+  const { gameId } = await getCurrentGame()
 
   while (!isGameOver()) {
-    await playerTurn()
+    await playerTurn(gameId)
 
     await aiTurn(gameId)
   }

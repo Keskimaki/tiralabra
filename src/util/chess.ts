@@ -5,7 +5,7 @@ import { Board, Move } from '../types.ts'
 export const chess = new Chess()
 
 export const move = (move: Move) => {
-  chess.move(move, { strict: true })
+  chess.move(move, { strict: false })
 }
 
 export const undo = () => {
@@ -33,4 +33,11 @@ export const lastMoveToUci = (): Move => {
   const uci = lastMove.from + lastMove.to
 
   return uci
+}
+
+export const UciToAlgebraic = (uci: Move): Move => {
+  const [from, to] = uci.match(/.{1,2}/g) as [string, string]
+  const piece = chess.get(from)?.type
+
+  return `${piece}${from}${to}`
 }
