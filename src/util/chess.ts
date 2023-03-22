@@ -16,6 +16,8 @@ export const isGameOver = () => chess.isGameOver()
 
 export const getBoard = () => chess.ascii()
 
+export const getBoardState = () => chess.board()
+
 export const getPossibleMoves = (): Move[] => chess.moves()
 
 export const getRandomMove = (): Move => {
