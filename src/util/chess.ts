@@ -29,6 +29,8 @@ export const getRandomMove = (): Move => {
 
 export const lastMoveToUci = (): Move => {
   const lastMove = chess.history({ verbose: true }).at(-1)
+  if (!lastMove) return ''
+
   const uci = lastMove.from + lastMove.to + (lastMove.promotion || '')
 
   return uci
@@ -38,7 +40,7 @@ export const UciToAn = (uci: Move): Move => {
   type Uci = [string, string, string | undefined]
 
   const [from, to, promotion] = uci.match(/.{1,2}/g) as Uci
-  const piece: Piece = chess.get(from)?.type
+  const piece: Piece = chess.get(from).type
 
   return `${piece}${from}${to}${promotion || ''}`
 }

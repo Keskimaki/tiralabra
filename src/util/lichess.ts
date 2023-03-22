@@ -65,9 +65,15 @@ export const getGameState = async (gameId: string) => {
   // First row is the game state
   const row = await stream.read()
   const text = decoder.decode(row.value)
-  const gameState = JSON.parse(text)
 
-  return gameState
+  try {
+    const gameState = JSON.parse(text)
+    if (gameState.type === 'gameFull') return gameState
+
+    throw new Error('Invalid response from Lichess')
+  } catch {
+    await getGameState(gameId)
+  }
 }
 
 export const getCurrentGame = async () => {
@@ -76,7 +82,7 @@ export const getCurrentGame = async () => {
 
   if (!event) {
     console.log('No active game found')
-    Deno.exit(0)
+    Deno.exit(1)
   }
 
   return event.game
