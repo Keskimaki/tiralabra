@@ -11,8 +11,14 @@ interface MinimaxResult {
   bestScore: number
 }
 
-const minimax = (chess: any, depth: number, isMaximizingPlayer: boolean): MinimaxResult => {
-  if (depth === 0 || isGameOver()) return { bestMove: null, bestScore: evaluateBoard(chess.board()) }
+const minimax = (
+  chess: any,
+  depth: number,
+  isMaximizingPlayer: boolean,
+): MinimaxResult => {
+  if (depth === 0 || isGameOver()) {
+    return { bestMove: null, bestScore: evaluateBoard(chess.board()) }
+  }
 
   let bestMove: BestMove = null
   let bestScore = isMaximizingPlayer ? -Infinity : Infinity
@@ -21,13 +27,19 @@ const minimax = (chess: any, depth: number, isMaximizingPlayer: boolean): Minima
     const tempChess = new Chess(chess.fen())
     tempChess.move(possibleMove, { strict: true })
 
-    const { bestScore: score } = minimax(tempChess, depth - 1, !isMaximizingPlayer)
+    const { bestScore: score } = minimax(
+      tempChess,
+      depth - 1,
+      !isMaximizingPlayer,
+    )
 
-    const isBetterScore = isMaximizingPlayer ? score > bestScore : score < bestScore
+    const isBetterScore = isMaximizingPlayer
+      ? score > bestScore
+      : score < bestScore
     if (isBetterScore) {
       bestScore = score
       bestMove = possibleMove
-    } 
+    }
   }
 
   return { bestMove, bestScore }

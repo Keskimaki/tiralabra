@@ -26,3 +26,11 @@ export const getRandomMove = (): Move => {
 
   return moves[randomIndex]
 }
+
+export const lastMoveToUci = (): Move => {
+  // TODO - get this working for promotion, castling, etc.
+  const lastMove = chess.history({ verbose: true }).at(-1)
+  const uci = lastMove.from + lastMove.to
+
+  return uci
+}

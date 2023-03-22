@@ -1,4 +1,4 @@
-import { Move, OccupiedSquare, Board, Piece } from '../types.ts'
+import { Board, Move, OccupiedSquare, Piece } from '../types.ts'
 import { chess } from '../util/chess.ts'
 import minimax from './minimax.ts'
 

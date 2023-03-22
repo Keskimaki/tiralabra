@@ -17,16 +17,21 @@ const playerTurn = async () => {
   move(playerMove)
 }
 
-const aiTurn = () => {
+const aiTurn = async (gameId: string) => {
   const aiMove = calculateMove()
+
   move(aiMove)
+  await botMove(gameId)
 }
 
 export const run = async (_options: Options) => {
+  const botStatus = await getStatus()
+  const gameId = botStatus.playing.split('/').at(-2)
+
   while (!isGameOver()) {
     await playerTurn()
 
-    aiTurn()
+    await aiTurn(gameId)
   }
 }
 
