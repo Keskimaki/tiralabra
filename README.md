@@ -1,4 +1,4 @@
-# Tirachess [![codecov](https://codecov.io/gh/Keskimaki/tiralabra/branch/main/graph/badge.svg?token=Y2NNQ3KPS0)](https://codecov.io/gh/Keskimaki/tiralabra)
+# Tirachess [![Maintainability](https://api.codeclimate.com/v1/badges/c9c944ac9abf94eddf74/maintainability)](https://codeclimate.com/github/Keskimaki/tiralabra/maintainability) [![codecov](https://codecov.io/gh/Keskimaki/tiralabra/branch/main/graph/badge.svg?token=Y2NNQ3KPS0)](https://codecov.io/gh/Keskimaki/tiralabra)
 
 ### Viikkoraportit
 
