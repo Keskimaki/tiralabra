@@ -1,4 +1,4 @@
-# Tirachess
+# Tirachess [![codecov](https://codecov.io/gh/Keskimaki/tiralabra/branch/main/graph/badge.svg?token=Y2NNQ3KPS0)](https://codecov.io/gh/Keskimaki/tiralabra)
 
 ### Viikkoraportit
 
