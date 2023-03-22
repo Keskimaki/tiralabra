@@ -1,6 +1,6 @@
 import { Chess } from 'chess'
 
-import { Move } from '../types.ts'
+import { Board, Move } from '../types.ts'
 
 const chess = new Chess()
 
@@ -12,11 +12,11 @@ export const undo = () => {
   chess.undo()
 }
 
-export const isGameOver = () => chess.isGameOver()
+export const isGameOver = (): boolean => chess.isGameOver()
 
-export const getBoard = () => chess.ascii()
+export const getBoard = (): string => chess.ascii()
 
-export const getBoardState = () => chess.board()
+export const getBoardState = (): Board => chess.board()
 
 export const getPossibleMoves = (): Move[] => chess.moves()
 

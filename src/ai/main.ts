@@ -1,5 +1,4 @@
-// deno-lint-ignore-file no-explicit-any
-import { Move } from '../types.ts'
+import { Move, OccupiedSquare, Board, Piece } from '../types.ts'
 import { getBoardState, getPossibleMoves, move, undo } from '../util/chess.ts'
 
 const pieceValues = {
@@ -11,22 +10,30 @@ const pieceValues = {
   k: 100,
 }
 
+const getOccupiedSquares = (board: Board): OccupiedSquare[] =>
+  board.flat().filter(Boolean) as OccupiedSquare[]
+
+const getPieces = (pieceColor: string, squares: OccupiedSquare[]) =>
+  squares.filter(({ color }) => color === pieceColor).map(({ type }) => type)
+
+const calculateValue = (pieces: Piece[]) => {
+  const values = pieces.map((piece) => pieceValues[piece])
+
+  return values.reduce((acc: number, val: number) => acc + val, 0)
+}
+
 const evaluateBoard = () => {
-  // Quick and dirty evaluation function
-  // Simply counts the value of own pieces on the board
-  // TODO: Rewrite properly, take opponents pieces and piece positions into account
+  // TODO remove hardcoded color
   const board = getBoardState()
+  const squares = getOccupiedSquares(board)
 
-  const pieces = board.flat().filter(Boolean)
-  const aiPieces = pieces.filter((piece: any) => piece.color === 'b').map((
-    piece: any,
-  ) => piece.type)
+  const whitePieces = getPieces('w', squares)
+  const blackPieces = getPieces('b', squares)
 
-  const values = aiPieces.map((piece: keyof typeof pieceValues) => pieceValues[piece])
+  const whiteValue = calculateValue(whitePieces)
+  const blackValue = calculateValue(blackPieces)
 
-  const value = values.reduce((acc: number, val: number) => acc + val, 0)
-
-  return value
+  return blackValue - whiteValue
 }
 
 const calculateMove = (): Move => {
