@@ -1,5 +1,5 @@
 import { Options } from './types.ts'
-import { getBoard, isGameOver, move, UciToAlgebraic } from './util/chess.ts'
+import { getBoard, isGameOver, move, UciToAn } from './util/chess.ts'
 import { waitForPlayer } from './util/prompt.ts'
 import calculateMove from './ai/main.ts'
 
@@ -21,7 +21,7 @@ const playerTurn = async (gameId: string) => {
   const gameState = await getGameState(gameId)
   const playerMove = gameState.state.moves.split(' ').at(-1)
 
-  move(UciToAlgebraic(playerMove))
+  move(UciToAn(playerMove))
 }
 
 const aiTurn = async (gameId: string) => {

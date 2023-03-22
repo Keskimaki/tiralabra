@@ -1,6 +1,6 @@
 import { Chess } from 'chess'
 
-import { Board, Move } from '../types.ts'
+import { Board, Move, Piece } from '../types.ts'
 
 export const chess = new Chess()
 
@@ -28,16 +28,15 @@ export const getRandomMove = (): Move => {
 }
 
 export const lastMoveToUci = (): Move => {
-  // TODO - get this working for promotion, castling, etc.
   const lastMove = chess.history({ verbose: true }).at(-1)
-  const uci = lastMove.from + lastMove.to
+  const uci = lastMove.from + lastMove.to + (lastMove.promotion || '')
 
   return uci
 }
 
-export const UciToAlgebraic = (uci: Move): Move => {
-  const [from, to] = uci.match(/.{1,2}/g) as [string, string]
-  const piece = chess.get(from)?.type
+export const UciToAn = (uci: Move): Move => {
+  const [from, to, promotion] = uci.match(/.{1,2}/g) as [string, string, string | undefined]
+  const piece: Piece = chess.get(from)?.type
 
-  return `${piece}${from}${to}`
+  return `${piece}${from}${to}${promotion || ''}`
 }
