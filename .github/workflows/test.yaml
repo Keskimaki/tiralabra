@@ -24,5 +24,6 @@ jobs:
 
   coverage:
     runs-on: ubuntu-22.04
+    needs: test
     steps:
       - uses: codecov/codecov-action@v3
