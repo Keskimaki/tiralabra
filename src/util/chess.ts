@@ -1,6 +1,6 @@
 import { Chess } from 'chess'
 
-import { Board, Move, Piece } from '../types.ts'
+import { Board, Color, ColorOption, Move, Piece } from '../types.ts'
 
 export const chess = new Chess()
 
@@ -44,3 +44,6 @@ export const UciToAn = (uci: Move): Move => {
 
   return `${piece}${from}${to}${promotion || ''}`
 }
+
+export const getOtherColor = (color: ColorOption): Color =>
+  color === ColorOption.White ? 'b' : 'w'

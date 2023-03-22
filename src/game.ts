@@ -1,6 +1,7 @@
-import { Options } from './types.ts'
+import { Color, ColorOption, Options } from './types.ts'
 import {
   getBoard,
+  getOtherColor,
   isGameOver,
   lastMoveToUci,
   move,
@@ -42,20 +43,26 @@ const playerTurn = async (gameId: string) => {
   move(playerMove)
 }
 
-const aiTurn = async (gameId: string) => {
-  const aiMove = calculateMove()
+const aiTurn = async (gameId: string, color: Color) => {
+  const aiMove = calculateMove(color)
 
   move(aiMove)
   await botMove(gameId)
 }
 
-export const run = async (_options: Options) => {
+export const run = async (options: Options) => {
+  const { color } = options
+  const aiColor = getOtherColor(color)
+
+  console.log('Starting game...')
   const { gameId } = await getCurrentGame()
+
+  if (color === ColorOption.Black) await aiTurn(gameId, aiColor)
 
   while (!isGameOver()) {
     await playerTurn(gameId)
 
-    await aiTurn(gameId)
+    await aiTurn(gameId, aiColor)
   }
 }
 

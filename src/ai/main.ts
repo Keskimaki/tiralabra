@@ -1,4 +1,4 @@
-import { Board, Move, OccupiedSquare, Piece } from '../types.ts'
+import { Board, Color, Move, OccupiedSquare, Piece } from '../types.ts'
 import { chess } from '../util/chess.ts'
 import minimax from './minimax.ts'
 
@@ -23,8 +23,7 @@ const calculateValue = (pieces: Piece[]) => {
   return values.reduce((acc: number, val: number) => acc + val, 0)
 }
 
-export const evaluateBoard = (board: Board) => {
-  // TODO remove hardcoded color
+export const evaluateBoard = (board: Board, color: Color) => {
   const squares = getOccupiedSquares(board)
 
   const whitePieces = getPieces('w', squares)
@@ -33,11 +32,15 @@ export const evaluateBoard = (board: Board) => {
   const whiteValue = calculateValue(whitePieces)
   const blackValue = calculateValue(blackPieces)
 
-  return blackValue - whiteValue
+  const score = color === 'w'
+    ? whiteValue - blackValue
+    : blackValue - whiteValue
+
+  return score
 }
 
-const calculateMove = (): Move => {
-  const { bestMove } = minimax(chess, 3, true)
+const calculateMove = (color: Color): Move => {
+  const { bestMove } = minimax(chess, 3, true, color)
 
   if (!bestMove) throw new Error('No move found')
 

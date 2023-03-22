@@ -1,6 +1,6 @@
 import { Chess } from 'chess'
 
-import { Move } from '../types.ts'
+import { Color, Move } from '../types.ts'
 import { isGameOver } from '../util/chess.ts'
 import { evaluateBoard } from './main.ts'
 
@@ -16,9 +16,10 @@ const minimax = (
   chess: any,
   depth: number,
   isMaximizingPlayer: boolean,
+  color: Color,
 ): MinimaxResult => {
   if (depth === 0 || isGameOver()) {
-    return { bestMove: null, bestScore: evaluateBoard(chess.board()) }
+    return { bestMove: null, bestScore: evaluateBoard(chess.board(), color) }
   }
 
   let bestMove: BestMove = null
@@ -32,6 +33,7 @@ const minimax = (
       tempChess,
       depth - 1,
       !isMaximizingPlayer,
+      color,
     )
 
     const isBetterScore = isMaximizingPlayer

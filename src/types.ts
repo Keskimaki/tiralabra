@@ -1,11 +1,13 @@
-export enum Color {
+export enum ColorOption {
   White = 'white',
   Black = 'black',
 }
 
 export interface Options {
-  color: Color
+  color: ColorOption
 }
+
+export type Color = 'w' | 'b'
 
 export type Move = string
 

@@ -1,9 +1,9 @@
 import { Command, EnumType } from 'cliffy/command/mod.ts'
 
-import { Color } from './types.ts'
+import { ColorOption } from './types.ts'
 import run from './game.ts'
 
-const colorType = new EnumType(Color)
+const colorType = new EnumType(ColorOption)
 
 await new Command()
   .name('tirachess')
@@ -11,7 +11,7 @@ await new Command()
   .description('Chess simulator for tiralabra')
   .type('color', colorType)
   .option('-c, --color <color:color>', 'Color of the player', {
-    default: Color.White as const,
+    default: ColorOption.White as const,
   })
   .action(run)
   .parse(Deno.args)
