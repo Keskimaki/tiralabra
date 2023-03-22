@@ -2,7 +2,7 @@ import { Chess } from 'chess'
 
 import { Board, Move } from '../types.ts'
 
-const chess = new Chess()
+export const chess = new Chess()
 
 export const move = (move: Move) => {
   chess.move(move, { strict: true })
