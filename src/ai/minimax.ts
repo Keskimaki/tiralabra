@@ -12,6 +12,7 @@ interface MinimaxResult {
 }
 
 const minimax = (
+  // deno-lint-ignore no-explicit-any
   chess: any,
   depth: number,
   isMaximizingPlayer: boolean,
@@ -36,6 +37,7 @@ const minimax = (
     const isBetterScore = isMaximizingPlayer
       ? score > bestScore
       : score < bestScore
+
     if (isBetterScore) {
       bestScore = score
       bestMove = possibleMove

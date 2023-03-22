@@ -35,7 +35,9 @@ export const lastMoveToUci = (): Move => {
 }
 
 export const UciToAn = (uci: Move): Move => {
-  const [from, to, promotion] = uci.match(/.{1,2}/g) as [string, string, string | undefined]
+  type Uci = [string, string, string | undefined]
+
+  const [from, to, promotion] = uci.match(/.{1,2}/g) as Uci
   const piece: Piece = chess.get(from)?.type
 
   return `${piece}${from}${to}${promotion || ''}`

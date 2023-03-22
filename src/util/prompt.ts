@@ -1,4 +1,4 @@
-import { Input, Confirm } from 'cliffy/prompt/mod.ts'
+import { Confirm, Input } from 'cliffy/prompt/mod.ts'
 
 import { Move } from '../types.ts'
 import { getPossibleMoves } from '../util/chess.ts'
