@@ -52,7 +52,24 @@ const eventStream = async () => {
   return events
 }
 
-export const getGameState = async (gameId: string) => {
+export const getGameState = async (stream: ReadableStreamDefaultReader<Uint8Array>) => {
+  const decoder = new TextDecoder('utf-8')
+
+  while (true) {
+    const row = await stream.read()
+    const text = decoder.decode(row.value)
+
+    try {
+      const gameState = JSON.parse(text)
+      console.log(gameState)
+      if (gameState.type === 'gameFull') return gameState
+    } catch {
+      continue
+    }
+  }
+}
+
+export const gameStream = async (gameId: string) => {
   const response = await fetch(`${baseUrl}/bot/game/stream/${gameId}`, {
     headers,
   })
@@ -60,20 +77,8 @@ export const getGameState = async (gameId: string) => {
   if (!response.body) throw new Error('No response from Lichess')
 
   const stream = response.body.getReader()
-  const decoder = new TextDecoder('utf-8')
 
-  // First row is the game state
-  const row = await stream.read()
-  const text = decoder.decode(row.value)
-
-  try {
-    const gameState = JSON.parse(text)
-    if (gameState.type === 'gameFull') return gameState
-
-    throw new Error('Invalid response from Lichess')
-  } catch {
-    await getGameState(gameId)
-  }
+  return stream
 }
 
 export const getCurrentGame = async () => {
