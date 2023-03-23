@@ -1,8 +1,12 @@
-import { Chess } from 'chess'
+import { Chess, Square } from 'chess'
 
 import { Board, Color, ColorOption, Move, Piece } from '../types.ts'
 
 export const chess = new Chess()
+
+export const reset = () => {
+  chess.reset()
+}
 
 export const move = (move: Move) => {
   chess.move(move, { strict: false })
@@ -37,7 +41,7 @@ export const lastMoveToUci = (): Move => {
 }
 
 export const UciToAn = (uci: Move): Move => {
-  type Uci = [string, string, string | undefined]
+  type Uci = [Square, Square, Piece | undefined]
 
   const [from, to, promotion] = uci.match(/.{1,2}/g) as Uci
   const piece: Piece = chess.get(from).type
