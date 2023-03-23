@@ -1,6 +1,6 @@
 import { Chess, Square } from 'chess'
 
-import { Board, Color, ColorOption, Move, Piece } from '../types.ts'
+import { Color, ColorOption, Move, Piece } from '../types.ts'
 
 export const chess = new Chess()
 
@@ -19,17 +19,6 @@ export const undo = () => {
 export const isGameOver = (): boolean => chess.isGameOver()
 
 export const getBoard = (): string => chess.ascii()
-
-export const getBoardState = (): Board => chess.board()
-
-export const getPossibleMoves = (): Move[] => chess.moves()
-
-export const getRandomMove = (): Move => {
-  const moves = getPossibleMoves()
-  const randomIndex = Math.floor(Math.random() * moves.length)
-
-  return moves[randomIndex]
-}
 
 export const lastMoveToUci = (): Move => {
   const lastMove = chess.history({ verbose: true }).at(-1)

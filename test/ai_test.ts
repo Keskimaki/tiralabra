@@ -9,7 +9,7 @@ Deno.test('Evaluate board works', async (t) => {
 
     const whiteScore = evaluateBoard(board, 'w')
     const blackScore = evaluateBoard(board, 'b')
-  
+
     assertEquals(whiteScore, blackScore)
   })
 
@@ -17,10 +17,10 @@ Deno.test('Evaluate board works', async (t) => {
     chess.remove('e2')
 
     const board = chess.board()
-  
+
     const whiteScore = evaluateBoard(board, 'w')
     const blackScore = evaluateBoard(board, 'b')
-  
+
     assertEquals(blackScore > whiteScore, true)
   })
 
