@@ -20,8 +20,6 @@ const showBoard = () => {
 const playerTurn = (playerMove: Move) => {
   move(UciToAn(playerMove))
   showBoard()
-
-  showBoard()
 }
 
 const aiTurn = async (gameId: string, color: Color) => {

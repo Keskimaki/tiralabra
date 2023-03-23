@@ -1,6 +1,7 @@
 import { Chess } from 'chess'
 
 import { Color, Move } from '../types.ts'
+import { shuffle } from '../util/util.ts'
 import { isGameOver } from '../util/chess.ts'
 import { evaluateBoard } from './main.ts'
 
@@ -25,7 +26,7 @@ const minimax = (
   let bestMove: BestMove = null
   let bestScore = isMaximizingPlayer ? -Infinity : Infinity
 
-  for (const possibleMove of chess.moves() as Move[]) {
+  for (const possibleMove of shuffle(chess.moves()) as Move[]) {
     const tempChess = new Chess(chess.fen())
     tempChess.move(possibleMove, { strict: true })
 
