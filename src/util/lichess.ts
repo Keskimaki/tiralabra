@@ -52,7 +52,9 @@ const eventStream = async () => {
   return events
 }
 
-export const getGameState = async (stream: ReadableStreamDefaultReader<Uint8Array>) => {
+export const getGameState = async (
+  stream: ReadableStreamDefaultReader<Uint8Array>,
+) => {
   const decoder = new TextDecoder('utf-8')
 
   while (true) {

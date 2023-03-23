@@ -1,4 +1,4 @@
-import { Color, ColorOption, Options, Move } from './types.ts'
+import { Color, ColorOption, Move, Options } from './types.ts'
 import {
   getBoard,
   getOtherColor,
@@ -7,7 +7,7 @@ import {
   move,
   UciToAn,
 } from './util/chess.ts'
-import { botMove, getCurrentGame, gameStream } from './util/lichess.ts'
+import { botMove, gameStream, getCurrentGame } from './util/lichess.ts'
 import calculateMove from './ai/main.ts'
 
 const showBoard = () => {
@@ -35,7 +35,9 @@ const aiTurn = async (gameId: string, color: Color) => {
   console.log('Waiting for player move...')
 }
 
-const getGameState = async (stream: ReadableStreamDefaultReader<Uint8Array>) => {
+const getGameState = async (
+  stream: ReadableStreamDefaultReader<Uint8Array>,
+) => {
   const decoder = new TextDecoder('utf-8')
 
   const row = await stream.read()
@@ -44,12 +46,12 @@ const getGameState = async (stream: ReadableStreamDefaultReader<Uint8Array>) => 
   try {
     const gameState = JSON.parse(text)
     return gameState
-  }
-  catch {
+  } catch {
     return null
   }
 }
 
+// deno-lint-ignore no-explicit-any
 const getLastMove = (gameState: any) => {
   if (!['gameFull', 'gameState'].includes(gameState.type)) return null
 
@@ -59,10 +61,9 @@ const getLastMove = (gameState: any) => {
   return lastMove
 }
 
-
 const gameLoop = async (gameId: string, aiColor: Color) => {
   const stream = await gameStream(gameId)
- 
+
   while (!isGameOver()) {
     const lastLocalMove = lastMoveToUci()
 
