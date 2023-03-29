@@ -3,6 +3,7 @@
 ### Viikkoraportit
 
 - [Viikko 1](./documentation/viikkoraportti/viikko1.md)
+- [Viikko 2](./documentation/viikkoraportti/viikko2.md)
 
 ## Lichess bot account
 
