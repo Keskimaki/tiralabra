@@ -1,7 +1,6 @@
-import { Color, ColorOption, Move, Options } from './types.ts'
+import { Color, Move, Options } from './types.ts'
 import {
   getBoard,
-  getOtherColor,
   isGameOver,
   lastMoveToUci,
   move,
@@ -79,14 +78,13 @@ const gameLoop = async (gameId: string, aiColor: Color) => {
 
 export const run = async (options: Options) => {
   const { color } = options
-  const aiColor = getOtherColor(color)
 
   console.log('Starting game...')
   const { gameId } = await getCurrentGame()
 
-  if (color === ColorOption.Black) await aiTurn(gameId, aiColor)
+  if (color === 'w') await aiTurn(gameId, color)
 
-  await gameLoop(gameId, aiColor)
+  await gameLoop(gameId, color)
 }
 
 export default run

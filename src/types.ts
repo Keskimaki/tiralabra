@@ -1,6 +1,6 @@
 export enum ColorOption {
-  White = 'white',
-  Black = 'black',
+  White = 'w',
+  Black = 'b',
 }
 
 export interface Options {
