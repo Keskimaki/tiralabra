@@ -50,7 +50,7 @@ export const evaluateBoard = (board: Board, color: Color) => {
 }
 
 const calculateMove = (color: Color): Move => {
-  const { bestMove } = minimax(chess, 3, true, color)
+  const { bestMove } = minimax(chess, 3, color)
 
   if (!bestMove) throw new Error('No move found')
 

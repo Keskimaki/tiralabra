@@ -15,11 +15,14 @@ const minimax = (
   // deno-lint-ignore no-explicit-any
   chess: any,
   depth: number,
-  isMaximizingPlayer: boolean,
   color: Color,
-): MinimaxResult => {
+  alpha = -Infinity,
+  beta = Infinity,
+  isMaximizingPlayer = true,
+  ): MinimaxResult => {
   if (depth === 0 || isGameOver()) {
-    return { bestMove: null, bestScore: evaluateBoard(chess.board(), color) }
+    const bestScore = evaluateBoard(chess.board(), color)
+    return { bestMove: null, bestScore }
   }
 
   let bestMove: BestMove = null
@@ -32,18 +35,29 @@ const minimax = (
     const { bestScore: score } = minimax(
       tempChess,
       depth - 1,
-      !isMaximizingPlayer,
       color,
+      alpha,
+      beta,
+      !isMaximizingPlayer,
     )
 
-    const isBetterScore = isMaximizingPlayer
-      ? score > bestScore
-      : score < bestScore
+    if (isMaximizingPlayer) {
+      if (score > bestScore) {
+        bestScore = score
+        bestMove = possibleMove
+      }
 
-    if (isBetterScore) {
-      bestScore = score
-      bestMove = possibleMove
+      alpha = Math.max(alpha, score)
+    } else {
+      if (score < bestScore) {
+        bestScore = score
+        bestMove = possibleMove
+      }
+
+      beta = Math.min(beta, score)
     }
+
+    if (beta <= alpha) break
   }
 
   return { bestMove, bestScore }

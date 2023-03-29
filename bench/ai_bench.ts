@@ -7,8 +7,8 @@ Deno.bench('Eval function', () => {
   evaluateBoard(board, 'w')
 })
 
-for (let i = 1; i < 4; i++) {
+for (let i = 1; i < 5; i++) {
   Deno.bench(`Minimax ${i} deep`, () => {
-    minimax(chess, i, true, 'w')
+    minimax(chess, i, 'w')
   })
 }
