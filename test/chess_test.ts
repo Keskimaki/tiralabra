@@ -1,11 +1,6 @@
 import { assertEquals } from 'std/testing/asserts.ts'
 
-import {
-  lastMoveToUci,
-  move,
-  reset,
-  UciToAn,
-} from '../src/util/chess.ts'
+import { lastMoveToUci, move, reset, UciToAn } from '../src/util/chess.ts'
 
 Deno.test('Last move to Uci returns correct value', () => {
   move('e4')

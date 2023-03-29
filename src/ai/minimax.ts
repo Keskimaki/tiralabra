@@ -17,7 +17,7 @@ const minimax = (
   alpha = -Infinity,
   beta = Infinity,
   isMaximizingPlayer = true,
-  ): MinimaxResult => {
+): MinimaxResult => {
   if (depth === 0 || isGameOver()) {
     const bestScore = evaluateBoard(chess.board(), color)
     return { bestMove: null, bestScore }
