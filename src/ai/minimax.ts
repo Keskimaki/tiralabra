@@ -26,7 +26,10 @@ const minimax = (
   let bestMove: BestMove = null
   let bestScore = isMaximizingPlayer ? -Infinity : Infinity
 
-  for (const possibleMove of chess.moves() as Move[]) {
+  const possibleMoves = chess.moves() as Move[]
+  possibleMoves.sort(() => 0.5 - Math.random())
+
+  for (const possibleMove of possibleMoves) {
     chess.move(possibleMove, { strict: true })
 
     const { bestScore: score } = minimax(
