@@ -1,7 +1,7 @@
 /**
  * @file functions to interact with the Lichess API
  * @link https://lichess.org/api#tag/Bot
-*/
+ */
 
 import { LICHESS_BOT_TOKEN } from './config.ts'
 import { lastMoveToUci } from './chess.ts'

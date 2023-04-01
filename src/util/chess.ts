@@ -1,7 +1,7 @@
 /**
-  * @file Game logic related utility functions based on chess.js library
-  * @todo get rid of chess.js and switch to using only UCI notation
-*/
+ * @file Game logic related utility functions based on chess.js library
+ * @todo get rid of chess.js and switch to using only UCI notation
+ */
 
 import { Chess, Square } from 'chess'
 
