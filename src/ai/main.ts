@@ -33,6 +33,7 @@ const calculateValue = (color: Color, pieces: OccupiedSquare[]) => {
   return values.reduce((acc: number, val: number) => acc + val, 0)
 }
 
+/** Evaluate the board based on the piece values and positions */
 export const evaluateBoard = (board: Board, color: Color) => {
   const squares = getOccupiedSquares(board)
 

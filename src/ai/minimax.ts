@@ -9,6 +9,7 @@ interface MinimaxResult {
   bestScore: number
 }
 
+/** Basic minimax algorithm with alpha-beta pruning */
 const minimax = (
   // deno-lint-ignore no-explicit-any
   chess: any,

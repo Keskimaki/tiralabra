@@ -32,6 +32,7 @@ const aiTurn = async (gameId: string, color: Color) => {
   console.log('Waiting for player move...')
 }
 
+/** Continuously read game stream until new player move is found */
 const getGameState = async (
   stream: ReadableStreamDefaultReader<Uint8Array>,
 ) => {

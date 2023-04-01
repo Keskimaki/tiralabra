@@ -5,6 +5,7 @@ import run from './game.ts'
 
 const colorType = new EnumType(ColorOption)
 
+// Cliffy based CLI
 await new Command()
   .name('tirachess')
   .version('1.0.0')

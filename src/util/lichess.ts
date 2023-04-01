@@ -1,3 +1,8 @@
+/**
+ * @file functions to interact with the Lichess API
+ * @link https://lichess.org/api#tag/Bot
+*/
+
 import { LICHESS_BOT_TOKEN } from './config.ts'
 import { lastMoveToUci } from './chess.ts'
 
@@ -7,6 +12,8 @@ const headers = {
   Authorization: `Bearer ${LICHESS_BOT_TOKEN}`,
 }
 
+// Currently unused
+/** Bot account status from Lichess */
 export const getStatus = async () => {
   const response = await fetch(`${baseUrl}/account`, {
     headers,
@@ -15,6 +22,7 @@ export const getStatus = async () => {
   return response.json()
 }
 
+/** Send next move to Lichess */
 export const botMove = async (gameId: string) => {
   const move = lastMoveToUci()
 
@@ -26,6 +34,7 @@ export const botMove = async (gameId: string) => {
   return response.json()
 }
 
+/** Open event stream to Lichess API and get all current events */
 const eventStream = async () => {
   const response = await fetch(`${baseUrl}/stream/event`, {
     headers,
@@ -52,25 +61,7 @@ const eventStream = async () => {
   return events
 }
 
-export const getGameState = async (
-  stream: ReadableStreamDefaultReader<Uint8Array>,
-) => {
-  const decoder = new TextDecoder('utf-8')
-
-  while (true) {
-    const row = await stream.read()
-    const text = decoder.decode(row.value)
-
-    try {
-      const gameState = JSON.parse(text)
-      console.log(gameState)
-      if (gameState.type === 'gameFull') return gameState
-    } catch {
-      continue
-    }
-  }
-}
-
+/** Continuous Lichess game stream */
 export const gameStream = async (gameId: string) => {
   const response = await fetch(`${baseUrl}/bot/game/stream/${gameId}`, {
     headers,
@@ -83,6 +74,7 @@ export const gameStream = async (gameId: string) => {
   return stream
 }
 
+/** Filter current game from Lichess event stream */
 export const getCurrentGame = async () => {
   const events = await eventStream()
   const event = events.find(({ type }) => type === 'gameStart')
@@ -95,6 +87,8 @@ export const getCurrentGame = async () => {
   return event.game
 }
 
+// Currently unused
+// TODO: Automatically accept challenges
 export const getChallenge = async () => {
   const events = await eventStream()
   const { challenge } = events.find(({ type }) => type === 'challenge')

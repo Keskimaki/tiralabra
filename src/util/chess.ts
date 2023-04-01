@@ -1,3 +1,8 @@
+/**
+  * @file Game logic related utility functions based on chess.js library
+  * @todo get rid of chess.js and switch to using only UCI notation
+*/
+
 import { Chess, Square } from 'chess'
 
 import { Move, Piece } from '../types.ts'
@@ -29,6 +34,7 @@ export const lastMoveToUci = (): Move => {
   return uci
 }
 
+// Lichess uses UCI notation, but the chess.js library uses AN notation
 export const UciToAn = (uci: Move): Move => {
   type Uci = [Square, Square, Piece | undefined]
 
