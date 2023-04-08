@@ -7,6 +7,41 @@ import {
   positionToCoordinate,
 } from './util.ts'
 
+const pieceDirections = {
+  n: [
+    [1, 2],
+    [2, 1],
+    [2, -1],
+    [1, -2],
+    [-1, -2],
+    [-2, -1],
+    [-2, 1],
+    [-1, 2],
+  ],
+  b: [
+    [1, 1],
+    [1, -1],
+    [-1, 1],
+    [-1, -1],
+  ],
+  r: [
+    [1, 0],
+    [0, 1],
+    [-1, 0],
+    [0, -1],
+  ],
+  k: [
+    [1, 0],
+    [0, 1],
+    [-1, 0],
+    [0, -1],
+    [1, 1],
+    [1, -1],
+    [-1, 1],
+    [-1, -1],
+  ],
+}
+
 const pawnMoves = (
   board: Board,
   color: Color,
@@ -59,16 +94,7 @@ const knightMoves = (
 ): Coordinate[] => {
   const moves: Coordinate[] = []
 
-  const directions = [
-    [1, 2],
-    [2, 1],
-    [2, -1],
-    [1, -2],
-    [-1, -2],
-    [-2, -1],
-    [-2, 1],
-    [-1, 2],
-  ]
+  const directions = pieceDirections.n
 
   for (const [dx, dy] of directions) {
     const [nx, ny] = [x + dx, y + dy]
@@ -97,12 +123,7 @@ const bishopMoves = (
 ): Coordinate[] => {
   const moves: Coordinate[] = []
 
-  const directions = [
-    [1, 1],
-    [1, -1],
-    [-1, 1],
-    [-1, -1],
-  ]
+  const directions = pieceDirections.b
 
   for (const [dx, dy] of directions) {
     let i = 1
@@ -136,12 +157,7 @@ const rookMoves = (
 ): Coordinate[] => {
   const moves: Coordinate[] = []
 
-  const directions = [
-    [1, 0],
-    [0, 1],
-    [-1, 0],
-    [0, -1],
-  ]
+  const directions = pieceDirections.r
 
   for (const [dx, dy] of directions) {
     let i = 1
@@ -175,16 +191,7 @@ const kingMoves = (
 ): Coordinate[] => {
   const moves: Coordinate[] = []
 
-  const directions = [
-    [1, 0],
-    [0, 1],
-    [-1, 0],
-    [0, -1],
-    [1, 1],
-    [1, -1],
-    [-1, 1],
-    [-1, -1],
-  ]
+  const directions = pieceDirections.k
 
   for (const [dx, dy] of directions) {
     const [nx, ny] = [x + dx, y + dy]
@@ -207,47 +214,45 @@ const kingMoves = (
 }
 
 /*
+ * @todo castling
+ * @todo en passant
+ * @todo promotion
+ * @todo check
+ * @todo checkmate
+ * @todo stalemate
+ */
+const pieceMoves = (board: Board, piece: OccupiedSquare, pos: Coordinate): Coordinate[] => {
+  const { type, color } = piece
+
+  switch (type) {
+    case 'p':
+      return pawnMoves(board, color, pos)
+    case 'n':
+      return knightMoves(board, color, pos)
+    case 'b':
+      return bishopMoves(board, color, pos)
+    case 'r':
+      return rookMoves(board, color, pos)
+    case 'q':
+      return [
+        ...bishopMoves(board, color, pos),
+        ...rookMoves(board, color, pos),
+      ]
+    case 'k':
+      return kingMoves(board, color, pos)
+  }
+}
+
+/*
  * Returns all possible moves for a given piece
  * @param board - the current board
  * @param piece - the piece to get the moves for
  * @returns an array of all possible moves
- * @todo add castling
- * @todo add en passant
- * @todo add promotion
- * @todo add check
- * @todo add checkmate
- * @todo add stalemate
  */
 const getPossibleMoves = (board: Board, piece: OccupiedSquare): Move[] => {
-  const { type, color, square } = piece
+  const pos = positionToCoordinate(piece.square)
 
-  const pos = positionToCoordinate(square)
-
-  let moves: Coordinate[] = []
-
-  switch (type) {
-    case 'p':
-      moves = pawnMoves(board, color, pos)
-      break
-    case 'n':
-      moves = knightMoves(board, color, pos)
-      break
-    case 'b':
-      moves = bishopMoves(board, color, pos)
-      break
-    case 'r':
-      moves = rookMoves(board, color, pos)
-      break
-    case 'q':
-      moves = [
-        ...bishopMoves(board, color, pos),
-        ...rookMoves(board, color, pos),
-      ]
-      break
-    case 'k':
-      moves = kingMoves(board, color, pos)
-      break
-  }
+  const moves = pieceMoves(board, piece, pos)
 
   return moves.map((move) => coordinatesToUciMove(pos, move))
 }
