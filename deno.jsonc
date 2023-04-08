@@ -4,7 +4,8 @@
     "dev": "deno run --allow-read --allow-env --allow-net --watch src/main.ts",
     "test": "deno test --coverage=coverage",
     "coverage": "deno coverage coverage/ --lcov > coverage.lcov",
-    "cov": "deno coverage --exclude='cache|test' coverage/"
+    "cov": "deno coverage --exclude='cache|test' coverage/",
+    "build": "deno compile --allow-read --allow-env --allow-net --output tirachess src/main.ts"
   },
   "importMap": "./import_map.json",
   "fmt": {
