@@ -221,7 +221,11 @@ const kingMoves = (
  * @todo checkmate
  * @todo stalemate
  */
-const pieceMoves = (board: Board, piece: OccupiedSquare, pos: Coordinate): Coordinate[] => {
+const pieceMoves = (
+  board: Board,
+  piece: OccupiedSquare,
+  pos: Coordinate,
+): Coordinate[] => {
   const { type, color } = piece
 
   switch (type) {
