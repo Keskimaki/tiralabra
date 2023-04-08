@@ -1,6 +1,7 @@
-import { Color, Move } from '../types.ts'
-import { isGameOver } from '../util/chess.ts'
+import { Color, Game, Move } from '../types.ts'
 import { evaluateBoard } from './main.ts'
+import { move, possibleMoves } from '../chess/main.ts'
+import { getOtherColor } from '../chess/util.ts'
 
 type BestMove = Move | null
 
@@ -11,32 +12,31 @@ interface MinimaxResult {
 
 /** Basic minimax algorithm with alpha-beta pruning */
 const minimax = (
-  // deno-lint-ignore no-explicit-any
-  chess: any,
+  game: Game,
   depth: number,
   color: Color,
   alpha = -Infinity,
   beta = Infinity,
   isMaximizingPlayer = true,
 ): MinimaxResult => {
-  if (depth === 0 || isGameOver()) {
-    const bestScore = evaluateBoard(chess.board(), color)
+  if (depth === 0) {
+    const bestScore = evaluateBoard(game.board, color)
     return { bestMove: null, bestScore }
   }
 
   let bestMove: BestMove = null
   let bestScore = isMaximizingPlayer ? -Infinity : Infinity
 
-  const possibleMoves = chess.moves() as Move[]
-  possibleMoves.sort(() => 0.5 - Math.random())
+  const moves = possibleMoves(game, color)
+  moves.sort(() => 0.5 - Math.random())
 
-  for (const possibleMove of possibleMoves) {
-    chess.move(possibleMove, { strict: true })
+  for (const possibleMove of moves) {
+    const gameState = move(game, possibleMove)
 
     const { bestScore: score } = minimax(
-      chess,
+      gameState,
       depth - 1,
-      color,
+      getOtherColor(color),
       alpha,
       beta,
       !isMaximizingPlayer,
@@ -57,8 +57,6 @@ const minimax = (
 
       beta = Math.min(beta, score)
     }
-
-    chess.undo()
 
     if (beta <= alpha) break
   }

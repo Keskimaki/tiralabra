@@ -4,7 +4,7 @@
  */
 
 import { LICHESS_BOT_TOKEN } from './config.ts'
-import { lastMoveToUci } from './chess.ts'
+import { Move } from '../types.ts'
 
 const baseUrl = 'https://lichess.org/api'
 
@@ -23,9 +23,8 @@ export const getStatus = async () => {
 }
 
 /** Send next move to Lichess */
-export const botMove = async (gameId: string) => {
-  const move = lastMoveToUci()
-
+export const botMove = async (gameId: string, move: Move) => {
+  console.log(move)
   const response = await fetch(`${baseUrl}/bot/game/${gameId}/move/${move}`, {
     method: 'POST',
     headers,

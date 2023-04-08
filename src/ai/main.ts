@@ -1,13 +1,7 @@
-import { Board, Color, Move, OccupiedSquare, Piece } from '../types.ts'
-import { chess } from '../util/chess.ts'
+import { Board, Color, Game, Move, OccupiedSquare, Piece } from '../types.ts'
 import { piecePositions, pieceValues } from './tables.ts'
 import minimax from './minimax.ts'
-
-const getOccupiedSquares = (board: Board): OccupiedSquare[] =>
-  board.flat().filter(Boolean) as OccupiedSquare[]
-
-const getPieces = (pieceColor: string, squares: OccupiedSquare[]) =>
-  squares.filter(({ color }) => color === pieceColor)
+import { getPieces } from '../chess/util.ts'
 
 const getPieceValue = (
   color: Color,
@@ -35,10 +29,8 @@ const calculateValue = (color: Color, pieces: OccupiedSquare[]) => {
 
 /** Evaluate the board based on the piece values and positions */
 export const evaluateBoard = (board: Board, color: Color) => {
-  const squares = getOccupiedSquares(board)
-
-  const whitePieces = getPieces('w', squares)
-  const blackPieces = getPieces('b', squares)
+  const whitePieces = getPieces(board, 'w')
+  const blackPieces = getPieces(board, 'b')
 
   const whiteValue = calculateValue('w', whitePieces)
   const blackValue = calculateValue('b', blackPieces)
@@ -50,8 +42,8 @@ export const evaluateBoard = (board: Board, color: Color) => {
   return score
 }
 
-const calculateMove = (color: Color): Move => {
-  const { bestMove } = minimax(chess, 4, color)
+const calculateMove = (game: Game, color: Color): Move => {
+  const { bestMove } = minimax(game, 4, color)
 
   if (!bestMove) throw new Error('No move found')
 

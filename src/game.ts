@@ -1,35 +1,32 @@
-import { Color, Move, Options } from './types.ts'
-import {
-  getBoard,
-  isGameOver,
-  lastMoveToUci,
-  move,
-  UciToAn,
-} from './util/chess.ts'
+// deno-lint-ignore-file no-explicit-any
+import { Board, Color, Game, Move, Options } from './types.ts'
 import { botMove, gameStream, getCurrentGame } from './util/lichess.ts'
 import calculateMove from './ai/main.ts'
+import { initializeGame, move } from './chess/main.ts'
 
-const showBoard = () => {
-  const board = getBoard()
-
+const showBoard = (board: Board) => {
   console.clear()
-  console.log(board)
+
+  // TODO: Prettier board visualization
+  console.log(
+    board.map((row: any) =>
+      row.map(({ type }: any) => type ? type : '#').join(' ')
+    ).join('\n'),
+  )
 }
 
-const playerTurn = (playerMove: Move) => {
-  move(UciToAn(playerMove))
-  showBoard()
-}
-
-const aiTurn = async (gameId: string, color: Color) => {
+const aiTurn = async (game: Game, color: Color): Promise<Move> => {
+  showBoard(game.board)
   console.log('Calculating move...')
-  const aiMove = calculateMove(color)
+  const aiMove = calculateMove(game, color)
 
-  move(aiMove)
-  await botMove(gameId)
+  const gameState = move(game, aiMove)
+  await botMove(game.gameId, aiMove)
 
-  showBoard()
+  showBoard(gameState.board)
   console.log('Waiting for player move...')
+
+  return aiMove
 }
 
 /** Continuously read game stream until new player move is found */
@@ -49,30 +46,29 @@ const getGameState = async (
   }
 }
 
-// deno-lint-ignore no-explicit-any
-const getLastMove = (gameState: any) => {
-  if (!['gameFull', 'gameState'].includes(gameState.type)) return null
+const getMoves = (gameState: any) => {
+  if (!['gameFull', 'gameState'].includes(gameState.type)) return []
 
   const { moves } = gameState.type === 'gameFull' ? gameState.state : gameState
-  const lastMove = moves.split(' ').at(-1)
 
-  return lastMove
+  return moves.split(' ')
 }
 
 const gameLoop = async (gameId: string, aiColor: Color) => {
   const stream = await gameStream(gameId)
 
-  while (!isGameOver()) {
-    const lastLocalMove = lastMoveToUci()
-
+  let lastLocalMove
+  while (true) {
     const gameState = await getGameState(stream)
     if (!gameState) continue
 
-    const lastMove = getLastMove(gameState)
+    const moves = getMoves(gameState)
+    const lastMove = moves.at(-1)
 
-    if (lastMove !== lastLocalMove) {
-      playerTurn(lastMove)
-      await aiTurn(gameId, aiColor)
+    if (lastMove && lastMove !== lastLocalMove) {
+      const game = initializeGame(gameId, moves)
+
+      lastLocalMove = await aiTurn(game, aiColor)
     }
   }
 }
@@ -82,8 +78,9 @@ export const run = async (options: Options) => {
 
   console.log('Starting game...')
   const { gameId } = await getCurrentGame()
+  const game = initializeGame(gameId)
 
-  if (color === 'w') await aiTurn(gameId, color)
+  if (color === 'w') await aiTurn(game, color)
 
   await gameLoop(gameId, color)
 }
