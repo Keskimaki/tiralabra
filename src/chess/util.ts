@@ -76,3 +76,7 @@ export const isOtherColor = (square: Square, color: Color) =>
   isOccupied(square) && square.color !== color
 
 export const getOtherColor = (color: Color) => color === 'w' ? 'b' : 'w'
+
+export const isInvalidCoordinate = (coordinate: Coordinate) =>
+  coordinate[0] < 0 || coordinate[0] > 7 || coordinate[1] < 0 ||
+  coordinate[1] > 7

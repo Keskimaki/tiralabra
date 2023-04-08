@@ -2,6 +2,7 @@ import { Board, Color, Coordinate, Move, OccupiedSquare } from '../types.ts'
 
 import {
   coordinatesToUciMove,
+  isInvalidCoordinate,
   isOccupied,
   isOtherColor,
   positionToCoordinate,
@@ -55,7 +56,7 @@ const pawnMoves = (
   const left = [x - 1, y + direction]
 
   for (const [nx, ny] of [right, left]) {
-    if (nx < 0 || nx > 7 || ny < 0 || ny > 7) continue
+    if (isInvalidCoordinate([nx, ny])) continue
 
     const square = board[ny][nx]
 
@@ -66,7 +67,7 @@ const pawnMoves = (
 
   const [nx, ny] = [x, y + direction]
 
-  if (nx < 0 || nx > 7 || ny < 0 || ny > 7) return []
+  if (isInvalidCoordinate([nx, ny])) return moves
 
   const square = board[ny][nx]
 
@@ -99,7 +100,7 @@ const knightMoves = (
   for (const [dx, dy] of directions) {
     const [nx, ny] = [x + dx, y + dy]
 
-    if (nx < 0 || nx > 7 || ny < 0 || ny > 7) continue
+    if (isInvalidCoordinate([nx, ny])) continue
 
     const square = board[ny][nx]
 
@@ -130,7 +131,7 @@ const bishopMoves = (
     while (true) {
       const [nx, ny] = [x + dx * i, y + dy * i]
 
-      if (nx < 0 || nx > 7 || ny < 0 || ny > 7) break
+      if (isInvalidCoordinate([nx, ny])) break
 
       const square = board[ny][nx]
 
@@ -164,7 +165,7 @@ const rookMoves = (
     while (true) {
       const [nx, ny] = [x + dx * i, y + dy * i]
 
-      if (nx < 0 || nx > 7 || ny < 0 || ny > 7) break
+      if (isInvalidCoordinate([nx, ny])) break
 
       const square = board[ny][nx]
 
@@ -196,7 +197,7 @@ const kingMoves = (
   for (const [dx, dy] of directions) {
     const [nx, ny] = [x + dx, y + dy]
 
-    if (nx < 0 || nx > 7 || ny < 0 || ny > 7) continue
+    if (isInvalidCoordinate([nx, ny])) continue
 
     const square = board[ny][nx]
 
