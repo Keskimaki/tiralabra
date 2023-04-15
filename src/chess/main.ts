@@ -20,8 +20,10 @@ const boardMove = (board: Board, move: Move): Board => {
 
   board[from[1]][from[0]] = { square }
 
+  const promotion = to[2]
   const { square: newSquare } = board[to[1]][to[0]]
-  board[to[1]][to[0]] = { square: newSquare, type, color }
+
+  board[to[1]][to[0]] = { square: newSquare, type: promotion || type, color }
 
   return board
 }

@@ -45,4 +45,4 @@ export interface Game {
   board: Board
 }
 
-export type Coordinate = [number, number]
+export type Coordinate = [number, number, Piece?]

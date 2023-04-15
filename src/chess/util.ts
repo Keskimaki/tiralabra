@@ -4,6 +4,7 @@ import {
   Coordinate,
   Move,
   OccupiedSquare,
+  Piece,
   Square,
 } from '../types.ts'
 
@@ -28,10 +29,12 @@ export const positionToCoordinate = (position: string): Coordinate => {
  * uciMoveToCoordinates('e2e4') // [[4, 1], [4, 3]]
  */
 export const uciMoveToCoordinates = (uci: Move): [Coordinate, Coordinate] => {
-  const [from, to] = uci.match(/.{1,2}/g) as [string, string]
+  const [from, to, promotion] = uci.match(/.{1,2}/g) as [string, string, Piece?]
 
   const fromCoordinate = positionToCoordinate(from)
-  const toCoordinate = positionToCoordinate(to)
+  let toCoordinate = positionToCoordinate(to)
+
+  if (promotion) toCoordinate = [toCoordinate[0], toCoordinate[1], promotion]
 
   return [fromCoordinate, toCoordinate] as [Coordinate, Coordinate]
 }
@@ -43,18 +46,19 @@ export const uciMoveToCoordinates = (uci: Move): [Coordinate, Coordinate] => {
  * @returns {string} - UCI notation of a move
  * @example
  * coordinatesToUciMove([4, 1], [4, 3]) // 'e2e4'
+ * coordinatesToUciMove([4, 6], [4, 7], 'q') // 'e7e8q'
  */
 export const coordinatesToUciMove = (
   from: Coordinate,
   to: Coordinate,
 ): Move => {
   const [fromFile, fromRank] = from
-  const [toFile, toRank] = to
+  const [toFile, toRank, promotion] = to
 
   const fromPosition = String.fromCharCode(fromFile + 97) + (fromRank + 1)
   const toPosition = String.fromCharCode(toFile + 97) + (toRank + 1)
 
-  return fromPosition + toPosition
+  return fromPosition + toPosition + (promotion || '')
 }
 
 export const isOccupied = (square: Square): square is OccupiedSquare =>

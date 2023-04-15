@@ -1,4 +1,11 @@
-import { Board, Color, Coordinate, Move, OccupiedSquare } from '../types.ts'
+import {
+  Board,
+  Color,
+  Coordinate,
+  Move,
+  OccupiedSquare,
+  Piece,
+} from '../types.ts'
 
 import {
   coordinatesToUciMove,
@@ -43,6 +50,8 @@ const pieceDirections = {
   ],
 }
 
+const promotions: Piece[] = ['q', 'r', 'b', 'n']
+
 const pawnMoves = (
   board: Board,
   color: Color,
@@ -55,6 +64,7 @@ const pawnMoves = (
   const right = [x + 1, y + direction]
   const left = [x - 1, y + direction]
 
+  // Check for captures
   for (const [nx, ny] of [right, left]) {
     if (isInvalidCoordinate([nx, ny])) continue
 
@@ -73,8 +83,17 @@ const pawnMoves = (
 
   if (isOccupied(square)) return moves
 
-  moves.push([nx, ny])
+  // Check for promotion
+  if (y === (color === 'w' ? 6 : 1)) {
+    for (const promotion of promotions) {
+      moves.push([nx, ny, promotion])
+    }
+  } else {
+    // Move forward
+    moves.push([nx, ny])
+  }
 
+  // Initial two step move
   if (y === (color === 'w' ? 1 : 6)) {
     const [nx, ny] = [x, y + direction * 2]
 
