@@ -1,18 +1,24 @@
 // deno-lint-ignore-file no-explicit-any
-import { Board, Color, Game, Move, Options } from './types.ts'
+import { Board, Color, Game, Move, Options, Square } from './types.ts'
 import { botMove, gameStream, getCurrentGame } from './util/lichess.ts'
 import calculateMove from './ai/main.ts'
 import { initializeGame, move } from './chess/main.ts'
+import { isOccupied } from './chess/util.ts'
 
 const showBoard = (board: Board) => {
-  console.clear()
+  const toString = (square: Square): string => {
+    if (!isOccupied(square)) return '#'
 
-  // TODO: Prettier board visualization
-  console.log(
-    board.map((row: any) =>
-      row.map(({ type }: any) => type ? type : '#').join(' ')
-    ).join('\n'),
-  )
+    const { type, color } = square
+    const piece = color === 'w' ? type.toUpperCase() : type
+
+    return piece
+  }
+
+  const str = board.map((row) => row.map(toString).join(' ')).join('\n')
+
+  console.clear()
+  console.log(str)
 }
 
 const aiTurn = async (game: Game, color: Color): Promise<Move> => {
