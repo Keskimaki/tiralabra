@@ -1,6 +1,7 @@
 import { Board, Color, Game, Move, OccupiedSquare } from '../types.ts'
 import startingBoard from './board.ts'
-import getPossibleMoves from './moves.ts'
+import getPossibleMoves from './moves/main.ts'
+import getCastlingMoves from './moves/castle.ts'
 import { getPieces, uciMoveToCoordinates } from './util.ts'
 
 /*
@@ -82,6 +83,8 @@ export const possibleMoves = (game: Game, color: Color) => {
 
     moves.push(...pieceMoves)
   }
+
+  moves.push(...getCastlingMoves(board, color))
 
   return moves
 }

@@ -5,8 +5,10 @@ import {
   Move,
   OccupiedSquare,
   Piece,
+  Position,
   Square,
 } from '../types.ts'
+import getPossibleMoves from './moves/main.ts'
 
 /*
  * Transform a board position to a coordinate
@@ -84,3 +86,31 @@ export const getOtherColor = (color: Color) => color === 'w' ? 'b' : 'w'
 export const isInvalidCoordinate = (coordinate: Coordinate) =>
   coordinate[0] < 0 || coordinate[0] > 7 || coordinate[1] < 0 ||
   coordinate[1] > 7
+
+/*
+ * Check if a square is threatened by the opponent
+ * @param {array} board - Current board state
+ * @param {string} square - Square to check
+ * @param {string} color - Color of the player to check
+ * @returns {boolean} - True if the square is threatened
+ * @todo: Very inefficient, should be improved
+ */
+export const isThreatened = (
+  board: Board,
+  square: Position,
+  color: Color,
+) => {
+  const pieces = getPieces(board, getOtherColor(color))
+
+  for (const piece of pieces) {
+    const moves = getPossibleMoves(board, piece)
+
+    for (const move of moves) {
+      const to = move.match(/.{1,2}/g)?.at(1)
+
+      if (to === square) return true
+    }
+  }
+
+  return false
+}

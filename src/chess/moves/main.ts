@@ -5,7 +5,7 @@ import {
   Move,
   OccupiedSquare,
   Piece,
-} from '../types.ts'
+} from '../../types.ts'
 
 import {
   coordinatesToUciMove,
@@ -13,7 +13,7 @@ import {
   isOccupied,
   isOtherColor,
   positionToCoordinate,
-} from './util.ts'
+} from '../util.ts'
 
 const pieceDirections = {
   n: [
@@ -234,9 +234,7 @@ const kingMoves = (
 }
 
 /*
- * @todo castling
  * @todo en passant
- * @todo promotion
  * @todo check
  * @todo checkmate
  * @todo stalemate
