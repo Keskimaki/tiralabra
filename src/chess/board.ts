@@ -83,4 +83,6 @@ const startingBoard: Board = [
   ],
 ]
 
-export default startingBoard.reverse()
+startingBoard.reverse()
+
+export default startingBoard
