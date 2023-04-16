@@ -8,14 +8,14 @@ Deno.test('Pawn', async (t) => {
     await t.step('White', () => {
       const pawn: OccupiedSquare = { square: 'e2', type: 'p', color: 'w' }
       const moves = getPossibleMoves(startingBoard, pawn)
-  
+
       checkMoves(moves, ['e2e3', 'e2e4'])
     })
-  
+
     await t.step('Black', () => {
       const pawn: OccupiedSquare = { square: 'e7', type: 'p', color: 'b' }
       const moves = getPossibleMoves(startingBoard, pawn)
-  
+
       checkMoves(moves, ['e7e6', 'e7e5'])
     })
   })
@@ -43,7 +43,7 @@ Deno.test('Pawn', async (t) => {
     updateBoard(board, whitePawn)
     updateBoard(board, blackPawn)
 
-    await t.step ('White', () => {
+    await t.step('White', () => {
       const moves = getPossibleMoves(board, whitePawn)
 
       checkMoves(moves, ['d4e5', 'd4d5'])
