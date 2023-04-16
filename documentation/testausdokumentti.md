@@ -15,13 +15,12 @@ komentorivikäyttöliittymä.
 ## Testaus
 
 Tekoälyn toiminta, eli minimax-algoritmi ja evaluaatiofunktio, sekä
-pelilogiikkaan liittyvät utiliteettifunktion ovat mukana testauksessa. Tämän
-hetkiset testit ovat melko rajallisia.
+pelilogiikkaa kuten sallitut siirrot ovat mukana testauksessa.
 
 Minimax-algoritmin palauttaman siirron validiteetti testataan ja
 evaluaatifunktiota testataan muutamassa eri tilanteessa. Utiliteettifunktioita
-testataan osana tekoälyyn liittyviä testejä ja
-AN/UCI-shakkinotaatioikonversioita testataan erikseen.
+testataan osana tekoälyyn liittyviä testejä. Pelilogiikka testataan kattavasti
+eri tilanteissa varsinkin sallittujen siirtojen tasolla.
 
 ## Testien suorittaminen
 
