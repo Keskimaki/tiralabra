@@ -14,16 +14,18 @@ const showBoard = (board: Board) => {
     return piece
   }
 
-  const str = board.map((row) => row.map(toString).join(' ')).join('\n')
+  const boardString = board.map((row) => row.map(toString).join(' ')).join('\n')
 
   console.clear()
-  console.log(str)
+  console.log(boardString)
 }
 
 const aiTurn = async (game: Game, color: Color): Promise<Move> => {
   showBoard(game.board)
   console.log('Calculating move...')
   const aiMove = calculateMove(game, color)
+
+  console.log(`\nMove: ${aiMove}`)
 
   const gameState = move(game, aiMove)
   await botMove(game.gameId, aiMove)

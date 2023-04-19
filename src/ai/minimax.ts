@@ -1,3 +1,5 @@
+import { writeAllSync } from 'std/streams/write_all.ts'
+
 import { Color, Game, Move } from '../types.ts'
 import { evaluateBoard } from './main.ts'
 import { move, possibleMoves } from '../chess/main.ts'
@@ -10,6 +12,18 @@ interface MinimaxResult {
   bestScore: number
 }
 
+let count = 0
+
+const updateCount = () => {
+  count++
+  writeAllSync(Deno.stdout,  new TextEncoder().encode('\r\x1b[K'))
+  writeAllSync(Deno.stdout,  new TextEncoder().encode(`Search depth: ${count}`))
+}
+
+export const resetCount = () => {
+  count = 0
+}
+
 /** Basic minimax algorithm with alpha-beta pruning */
 const minimax = (
   game: Game,
@@ -19,6 +33,8 @@ const minimax = (
   beta = Infinity,
   isMaximizingPlayer = true,
 ): MinimaxResult => {
+  updateCount()
+
   if (depth === 0) {
     const bestScore = evaluateBoard(game.board, color)
     return { bestMove: null, bestScore }

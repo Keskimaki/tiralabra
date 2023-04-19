@@ -1,6 +1,6 @@
 import { Board, Color, Game, Move, OccupiedSquare, Piece } from '../types.ts'
 import { piecePositions, pieceValues } from './tables.ts'
-import minimax from './minimax.ts'
+import minimax, { resetCount } from './minimax.ts'
 import { getPieces } from '../chess/util.ts'
 
 const getPieceValue = (
@@ -44,6 +44,7 @@ export const evaluateBoard = (board: Board, color: Color) => {
 
 const calculateMove = (game: Game, color: Color): Move => {
   const { bestMove } = minimax(game, 4, color)
+  resetCount()
 
   if (!bestMove) throw new Error('No move found')
 

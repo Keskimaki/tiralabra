@@ -11,8 +11,6 @@ Deno.test('Evaluate board works', async (t) => {
     const whiteScore = evaluateBoard(board, 'w')
     const blackScore = evaluateBoard(board, 'b')
 
-    console.log(blackScore, whiteScore)
-
     assertEquals(whiteScore, blackScore)
   })
 

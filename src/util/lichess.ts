@@ -24,7 +24,6 @@ export const getStatus = async () => {
 
 /** Send next move to Lichess */
 export const botMove = async (gameId: string, move: Move) => {
-  console.log(move)
   const response = await fetch(`${baseUrl}/bot/game/${gameId}/move/${move}`, {
     method: 'POST',
     headers,
