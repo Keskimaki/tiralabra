@@ -1,7 +1,7 @@
 import { Board, Color, Game, Move, OccupiedSquare } from '../types.ts'
 import startingBoard from './board.ts'
 import getPossibleMoves from './moves/main.ts'
-import getCastlingMoves from './moves/castle.ts'
+import getCastlingMoves, { castlingRookMoves } from './moves/castle.ts'
 import { getPieces, uciMoveToCoordinates } from './util.ts'
 
 /*
@@ -25,6 +25,11 @@ const boardMove = (board: Board, move: Move): Board => {
   const { square: newSquare } = board[to[1]][to[0]]
 
   board[to[1]][to[0]] = { square: newSquare, type: promotion || type, color }
+
+  // During castling, move the rook as well
+  if (Object.keys(castlingRookMoves).includes(move)) {
+    board = boardMove(board, castlingRookMoves[move])
+  }
 
   return board
 }

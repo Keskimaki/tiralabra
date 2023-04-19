@@ -6,6 +6,13 @@ import {
   positionToCoordinate,
 } from '../util.ts'
 
+export const castlingRookMoves: { [n: Move]: Move } = {
+  'e1g1': 'h1f1',
+  'e1c1': 'a1d1',
+  'e8g8': 'h8f8',
+  'e8c8': 'a8d8',
+}
+
 /*
  * Get all possible castling moves
  * Previous moves are not currently checked, so it is possible to get invalid moves
