@@ -1,10 +1,10 @@
 import { Board, Color, Game, Move, Options, Square } from './types.ts'
 import { botMove, gameStream, getCurrentGame } from './util/lichess.ts'
-import calculateMove from './ai/main.ts'
+import calculateMove, { evaluateBoard } from './ai/main.ts'
 import { initializeGame, move } from './chess/main.ts'
 import { isOccupied } from './chess/util.ts'
 
-const showBoard = (board: Board) => {
+const showBoard = (board: Board, color: Color) => {
   const toString = (square: Square): string => {
     if (!isOccupied(square)) return '#'
 
@@ -14,14 +14,16 @@ const showBoard = (board: Board) => {
     return piece
   }
 
+  const score = evaluateBoard(board, color)
   const boardString = board.map((row) => row.map(toString).join(' ')).join('\n')
 
   console.clear()
+  console.log(`AI score: ${score}`)
   console.log(boardString)
 }
 
 const aiTurn = async (game: Game, color: Color): Promise<Move> => {
-  showBoard(game.board)
+  showBoard(game.board, color)
   console.log('Calculating move...')
   const aiMove = calculateMove(game, color)
 
@@ -30,7 +32,7 @@ const aiTurn = async (game: Game, color: Color): Promise<Move> => {
   const gameState = move(game, aiMove)
   await botMove(game.gameId, aiMove)
 
-  showBoard(gameState.board)
+  showBoard(gameState.board, color)
   console.log('Waiting for player move...')
 
   return aiMove
