@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
 import { Board, Color, Game, Move, Options, Square } from './types.ts'
 import { botMove, gameStream, getCurrentGame } from './util/lichess.ts'
 import calculateMove from './ai/main.ts'
@@ -52,6 +51,7 @@ const getGameState = async (
   }
 }
 
+// deno-lint-ignore no-explicit-any
 const getMoves = (gameState: any) => {
   if (!['gameFull', 'gameState'].includes(gameState.type)) return []
 
