@@ -16,8 +16,13 @@ let count = 0
 
 const updateCount = () => {
   count++
-  writeAllSync(Deno.stdout,  new TextEncoder().encode('\r\x1b[K'))
-  writeAllSync(Deno.stdout,  new TextEncoder().encode(`Search depth: ${count}`))
+  if (count % 1000 === 0) {
+    writeAllSync(Deno.stdout, new TextEncoder().encode('\r\x1b[K'))
+    writeAllSync(
+      Deno.stdout,
+      new TextEncoder().encode(`Search depth: ${count}`),
+    )
+  }
 }
 
 export const resetCount = () => {
