@@ -4,6 +4,11 @@ import calculateMove, { evaluateBoard } from './ai/main.ts'
 import { initializeGame, move } from './chess/main.ts'
 import { isOccupied } from './chess/util.ts'
 
+const reverseBoard = (board: Board, color: Color): Board =>
+  color === 'w'
+    ? board.slice().reverse()
+    : board.slice().map((row) => row.slice().reverse())
+
 const showBoard = (board: Board, color: Color) => {
   const toString = (square: Square): string => {
     if (!isOccupied(square)) return '#'
@@ -15,7 +20,10 @@ const showBoard = (board: Board, color: Color) => {
   }
 
   const score = evaluateBoard(board, color)
-  const boardString = board.map((row) => row.map(toString).join(' ')).join('\n')
+
+  const reversedBoard = reverseBoard(board, color)
+  const boardString = reversedBoard.map((row) => row.map(toString).join(' '))
+    .join('\n')
 
   console.clear()
   console.log(`AI score: ${score}`)
