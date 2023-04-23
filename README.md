@@ -6,6 +6,7 @@
 - [Viikko 2](./documentation/viikkoraportti/viikko2.md)
 - [Viikko 3](./documentation/viikkoraportti/viikko3.md)
 - [Viikko 4](./documentation/viikkoraportti/viikko4.md)
+- [Viikko 5](./documentation/viikkoraportti/viikko5.md)
 
 ## Lichess bot account
 
