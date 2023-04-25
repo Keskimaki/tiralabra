@@ -55,7 +55,7 @@ Deno.test('Captures when advantageous', () => {
 })
 
 Deno.test('Trades for a more valuable piece', () => {
-  const moves = ['g1f3', 'd7d6','f3e5', 'd5d4', 'e5c6', 'd4d3']
+  const moves = ['g1f3', 'd7d6', 'f3e5', 'd5d4', 'e5c6', 'd4d3']
   const game = initializeGame('test', moves)
 
   const move = calculateMove(game, 'w')

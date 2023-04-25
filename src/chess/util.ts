@@ -2,12 +2,12 @@ import {
   Board,
   Color,
   Coordinate,
+  Game,
   Move,
   OccupiedSquare,
   Piece,
   Position,
   Square,
-  Game,
 } from '../types.ts'
 import getPossibleMoves from './moves/main.ts'
 
@@ -127,11 +127,11 @@ export const lastMoveIsTwoSquarePawnMove = (moves: Move[]) => {
 }
 
 /*
-  * Get all possible en passant moves
-  * @param {object} game - Current game state
-  * @param {string} color - Color of the player to check
-  * @returns {array} - List of en passant moves
-  */
+ * Get all possible en passant moves
+ * @param {object} game - Current game state
+ * @param {string} color - Color of the player to check
+ * @returns {array} - List of en passant moves
+ */
 export const getEnPassantMoves = (game: Game, color: Color) => {
   const { moves, board } = game
 
@@ -150,24 +150,34 @@ export const getEnPassantMoves = (game: Game, color: Color) => {
 
   const enPassantMoves = []
 
-  const leftSquareIsPawn = leftSquare?.type === 'p' && leftSquare?.color === color
-  const rightSquareIsPawn = rightSquare?.type === 'p' && rightSquare?.color === color
+  const leftSquareIsPawn = leftSquare?.type === 'p' &&
+    leftSquare?.color === color
+  const rightSquareIsPawn = rightSquare?.type === 'p' &&
+    rightSquare?.color === color
 
   if (color === 'w') {
     if (leftSquareIsPawn) {
-      enPassantMoves.push(coordinatesToUciMove([file - 1, rank], [file, rank + 1]))
+      enPassantMoves.push(
+        coordinatesToUciMove([file - 1, rank], [file, rank + 1]),
+      )
     }
 
     if (rightSquareIsPawn) {
-      enPassantMoves.push(coordinatesToUciMove([file + 1, rank], [file, rank + 1]))
+      enPassantMoves.push(
+        coordinatesToUciMove([file + 1, rank], [file, rank + 1]),
+      )
     }
   } else {
     if (leftSquareIsPawn) {
-      enPassantMoves.push(coordinatesToUciMove([file - 1, rank], [file, rank - 1]))
+      enPassantMoves.push(
+        coordinatesToUciMove([file - 1, rank], [file, rank - 1]),
+      )
     }
 
     if (rightSquareIsPawn) {
-      enPassantMoves.push(coordinatesToUciMove([file + 1, rank], [file, rank - 1]))
+      enPassantMoves.push(
+        coordinatesToUciMove([file + 1, rank], [file, rank - 1]),
+      )
     }
   }
 

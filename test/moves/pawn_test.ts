@@ -110,7 +110,13 @@ Deno.test('Pawn', async (t) => {
     })
 
     await t.step('Black', () => {
-      const game = initializeGame('test', ['e2e4', 'd7d5', 'e4e5', 'd5d4', 'c2c4'])
+      const game = initializeGame('test', [
+        'e2e4',
+        'd7d5',
+        'e4e5',
+        'd5d4',
+        'c2c4',
+      ])
 
       const moves = possibleMoves(game, 'b')
 
