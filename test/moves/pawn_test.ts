@@ -1,9 +1,5 @@
-import { assertEquals } from 'std/testing/asserts.ts'
-
 import { OccupiedSquare } from '../../src/types.ts'
 import getPossibleMoves from '../../src/chess/moves/main.ts'
-import { move, possibleMoves } from '../../src/chess/main.ts'
-import { initializeGame } from '../../src/chess/main.ts'
 import startingBoard from '../../src/chess/board.ts'
 import { checkMoves, getEmptyBoard, updateBoard } from '../util.ts'
 

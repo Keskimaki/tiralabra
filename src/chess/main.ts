@@ -2,7 +2,7 @@ import { Board, Color, Game, Move, OccupiedSquare } from '../types.ts'
 import startingBoard from './board.ts'
 import getPossibleMoves from './moves/main.ts'
 import getCastlingMoves, { castlingRookMoves } from './moves/castle.ts'
-import { getEnPassantMoves, getPieces, uciMoveToCoordinates } from './util.ts'
+import { getPieces, uciMoveToCoordinates } from './util.ts'
 
 /*
  * Move a piece on the board
