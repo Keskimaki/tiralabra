@@ -35,3 +35,29 @@ Deno.test('Minimax returns a valid move', () => {
 
   assertEquals(moves.includes(firstMove), true)
 })
+
+Deno.test('Winning move is found', () => {
+  const moves = ['f2f4', 'e7e6', 'g2g4']
+  const game = initializeGame('test', moves)
+
+  const move = calculateMove(game, 'b')
+
+  assertEquals(move, 'd8h4')
+})
+
+Deno.test('Captures when advantageous', () => {
+  const moves = ['c2c3', 'c7c6', 'b2b4', 'd8a5']
+  const game = initializeGame('test', moves)
+
+  const move = calculateMove(game, 'w')
+
+  assertEquals(move, 'b4a5')
+})
+
+Deno.test('Trades for a more valuable piece', () => {
+  const moves = ['g1f3', 'd7d6','f3e5', 'd5d4', 'e5c6', 'd4d3']
+  const game = initializeGame('test', moves)
+
+  const move = calculateMove(game, 'w')
+  assertEquals(move, 'c6d8')
+})
