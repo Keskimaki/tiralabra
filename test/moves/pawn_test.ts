@@ -2,7 +2,7 @@ import { assertEquals } from 'std/testing/asserts.ts'
 
 import { OccupiedSquare } from '../../src/types.ts'
 import getPossibleMoves from '../../src/chess/moves/main.ts'
-import { possibleMoves } from '../../src/chess/main.ts'
+import { move, possibleMoves } from '../../src/chess/main.ts'
 import { initializeGame } from '../../src/chess/main.ts'
 import startingBoard from '../../src/chess/board.ts'
 import { checkMoves, getEmptyBoard, updateBoard } from '../util.ts'
@@ -103,24 +103,36 @@ Deno.test('Pawn', async (t) => {
   await t.step('En passant', async (t) => {
     await t.step('White', () => {
       const game = initializeGame('test', ['e2e4', 'e7e6', 'e4e5', 'd7d5'])
-
       const moves = possibleMoves(game, 'w')
 
       assertEquals(moves.includes('e5d6'), true)
+
+      const game2 = move(game, 'd2d3')
+      const game3 = move(game2, 'f7f5')
+
+      const moves2 = possibleMoves(game3, 'w')
+
+      assertEquals(moves2.includes('e5f6'), true)
     })
 
     await t.step('Black', () => {
       const game = initializeGame('test', [
-        'e2e4',
+        'f2f4',
         'd7d5',
-        'e4e5',
+        'f4f5',
         'd5d4',
         'c2c4',
       ])
-
       const moves = possibleMoves(game, 'b')
 
       assertEquals(moves.includes('d4c3'), true)
+
+      const game2 = move(game, 'e7e6')
+      const game3 = move(game2, 'e2e4')
+
+      const moves2 = possibleMoves(game3, 'b')
+
+      assertEquals(moves2.includes('d4e3'), true)
     })
   })
 })
