@@ -1,5 +1,9 @@
+import { assertEquals } from 'std/testing/asserts.ts'
+
 import { OccupiedSquare } from '../../src/types.ts'
 import getPossibleMoves from '../../src/chess/moves/main.ts'
+import { possibleMoves } from '../../src/chess/main.ts'
+import { initializeGame } from '../../src/chess/main.ts'
 import startingBoard from '../../src/chess/board.ts'
 import { checkMoves, getEmptyBoard, updateBoard } from '../util.ts'
 
@@ -96,5 +100,21 @@ Deno.test('Pawn', async (t) => {
     })
   })
 
-  // TODO: En passant
+  await t.step('En passant', async (t) => {
+    await t.step('White', () => {
+      const game = initializeGame('test', ['e2e4', 'e7e6', 'e4e5', 'd7d5'])
+
+      const moves = possibleMoves(game, 'w')
+
+      assertEquals(moves.includes('e5d6'), true)
+    })
+
+    await t.step('Black', () => {
+      const game = initializeGame('test', ['e2e4', 'd7d5', 'e4e5', 'd5d4', 'c2c4'])
+
+      const moves = possibleMoves(game, 'b')
+
+      assertEquals(moves.includes('d4c3'), true)
+    })
+  })
 })

@@ -7,6 +7,7 @@ import {
   Piece,
   Position,
   Square,
+  Game,
 } from '../types.ts'
 import getPossibleMoves from './moves/main.ts'
 
@@ -113,4 +114,62 @@ export const isThreatened = (
   }
 
   return false
+}
+
+export const lastMoveIsTwoSquarePawnMove = (moves: Move[]) => {
+  const lastMove = moves.at(-1)
+
+  if (!lastMove) return false
+
+  const [, to] = uciMoveToCoordinates(lastMove)
+
+  return to[1] === 2 || to[1] === 5
+}
+
+/*
+  * Get all possible en passant moves
+  * @param {object} game - Current game state
+  * @param {string} color - Color of the player to check
+  * @returns {array} - List of en passant moves
+  */
+export const getEnPassantMoves = (game: Game, color: Color) => {
+  const { moves, board } = game
+
+  const lastMove = moves.at(-1)
+  if (!lastMove) return []
+
+  const [from, to] = uciMoveToCoordinates(lastMove)
+
+  const isTwoSquareMove = Math.abs(from[1] - to[1]) === 2
+  if (!isTwoSquareMove) return []
+
+  const [file, rank] = to
+
+  const leftSquare = board[file - 1]?.[rank] as OccupiedSquare
+  const rightSquare = board[file + 1]?.[rank] as OccupiedSquare
+
+  const enPassantMoves = []
+
+  const leftSquareIsPawn = leftSquare?.type === 'p' && leftSquare?.color === color
+  const rightSquareIsPawn = rightSquare?.type === 'p' && rightSquare?.color === color
+
+  if (color === 'w') {
+    if (leftSquareIsPawn) {
+      enPassantMoves.push(coordinatesToUciMove([file - 1, rank], [file, rank + 1]))
+    }
+
+    if (rightSquareIsPawn) {
+      enPassantMoves.push(coordinatesToUciMove([file + 1, rank], [file, rank + 1]))
+    }
+  } else {
+    if (leftSquareIsPawn) {
+      enPassantMoves.push(coordinatesToUciMove([file - 1, rank], [file, rank - 1]))
+    }
+
+    if (rightSquareIsPawn) {
+      enPassantMoves.push(coordinatesToUciMove([file + 1, rank], [file, rank - 1]))
+    }
+  }
+
+  return enPassantMoves
 }
