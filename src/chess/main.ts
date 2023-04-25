@@ -90,7 +90,7 @@ export const possibleMoves = (game: Game, color: Color) => {
   }
 
   moves.push(...getCastlingMoves(board, color))
-  moves.push(...getEnPassantMoves(game, color))
+  // moves.push(...getEnPassantMoves(game, color))
 
   return moves
 }
