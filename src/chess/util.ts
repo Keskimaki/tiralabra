@@ -116,16 +116,6 @@ export const isThreatened = (
   return false
 }
 
-export const lastMoveIsTwoSquarePawnMove = (moves: Move[]) => {
-  const lastMove = moves.at(-1)
-
-  if (!lastMove) return false
-
-  const [, to] = uciMoveToCoordinates(lastMove)
-
-  return to[1] === 2 || to[1] === 5
-}
-
 /*
  * Get all possible en passant moves
  * @param {object} game - Current game state
@@ -140,8 +130,10 @@ export const getEnPassantMoves = (game: Game, color: Color) => {
 
   const [from, to] = uciMoveToCoordinates(lastMove)
 
+  const isPawnMove = (board[to[1]][to[0]] as OccupiedSquare)?.type === 'p'
   const isTwoSquareMove = Math.abs(from[1] - to[1]) === 2
-  if (!isTwoSquareMove) return []
+
+  if (!isPawnMove || !isTwoSquareMove) return []
 
   const [file, rank] = to
 
