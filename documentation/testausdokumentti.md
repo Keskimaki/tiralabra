@@ -17,10 +17,15 @@ komentorivikäyttöliittymä.
 Tekoälyn toiminta, eli minimax-algoritmi ja evaluaatiofunktio, sekä
 pelilogiikkaa kuten sallitut siirrot ovat mukana testauksessa.
 
-Minimax-algoritmin palauttaman siirron validiteetti testataan ja
-evaluaatifunktiota testataan muutamassa eri tilanteessa. Utiliteettifunktioita
-testataan osana tekoälyyn liittyviä testejä. Pelilogiikka testataan kattavasti
-eri tilanteissa varsinkin sallittujen siirtojen tasolla.
+Evaluaatifunktiota testataan erikseen varmistamalla alkutilanteen samanarvoisuus
+ja se, että nappulan menettäminen huonontaa tilannetta. Funktiota testataan myös
+osana Minimax-algoritmin testejä. Utiliteettifunktioita testataan osana muita
+testejä. Pelilogiikka testataan kattavasti eri tilanteissa varsinkin sallittujen
+siirtojen tasolla.
+
+Minimax-algoritmin palauttaman siirron validiteetti testataan. Tämän lisäksi
+testataan algoritmin kyky löytää voittava siirto, vastustajan nappuloiden
+syöminen ja tekoälylle edullisten vaihtojen tekeminen.
 
 ## Testien suorittaminen
 
@@ -31,7 +36,7 @@ automaattisesti osana CI-putkea.
 ## Suorituskykytestaus
 
 Evaluaatiofunktion sekä minimax-algoritmin suoritusnopeutta eri syvyyksillä
-testataan. Suorituskykytestit voi suorittaa komennolla `deno task bench`.
+testataan. Suorituskykytestit voi suorittaa komennolla `deno bench`.
 
 ## Koodin laadun seuranta ![Maintainability](https://api.codeclimate.com/v1/badges/c9c944ac9abf94eddf74/maintainability)
 
