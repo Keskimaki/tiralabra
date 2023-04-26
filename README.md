@@ -30,8 +30,8 @@ https://lichess.org/api#tag/Bot/operation/botAccountUpgrade
 
 3. Run the application with `deno task run`
 
-4. The app can also be compiled into an executable binary `tirachess` with
-   `deno task build`
+The app can also be compiled into an executable binary `tirachess` with
+`deno task build`
 
 ## Usage
 
