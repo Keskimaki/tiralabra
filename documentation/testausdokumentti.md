@@ -8,6 +8,8 @@ luonti ja sen lähetys Codecov-sivustolla tapahtuu automaattisesti osana
 CI-putkea. Kattavuutta ja siihen liittyviä visualisointeja voi katsella
 osoitteessa https://app.codecov.io/gh/Keskimaki/tiralabra.
 
+![image](https://user-images.githubusercontent.com/87322574/235288613-6ca97e5b-4b10-4976-b4be-2b2b96673c63.png)
+
 Testikattavuuslaskenta ei ota kokonaan testaamattomia tiedostoja huomioon.
 Kokonaan testauksen ulkopuolella on tällä hetkellä Lichess API-integraatio sekä
 komentorivikäyttöliittymä.
