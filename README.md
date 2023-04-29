@@ -44,6 +44,9 @@ with the bot account.
 To play against the bot or to use the bot against any of the bots available on
 Lichess. First start the game on Lichess and then simply run the application.
 
+Note that automatically accepting challenges is not implemented so you need to
+manually start the game on Lichess.
+
 ## Development
 
 Run the app with `deno task run`
