@@ -32,7 +32,26 @@ avulla.
 
 ## Puutteet ja parannusehdotukset
 
-### TODO
+### Puutteet
+
+- Ohjelma ei tue automaattista Lichess-sivustolla lähetettyjen haasteiden
+  hyväksymistä
+
+- Käynnissä oleva ohjelma tukee vain yhtä samanaikaisesti aktiivista peliä
+
+- Suoritusnopeutta ja evaluaatiofunktioita voisi edelleen parantaa
+
+### Parannusehdotukset
+
+- Automaattinen Lichess-sivuston haasteiden hyväksyntä
+
+- Tuki rajattomalle määrälle samanaikaisesti käynnissä olevia pelejä
+
+- Useamman säikeen käyttö samanaikaisten pelien yhteydessa
+
+- Monisäikeistys mahdollisesti myös osana Minimax-algoritmia
+
+- Kehittyneemmän evaluaatiofunktion totetutus
 
 ## Lähteet
 
