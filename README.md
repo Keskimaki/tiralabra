@@ -13,7 +13,7 @@
 
 You need a Lichess bot token to run the application. See
 https://github.com/lichess-bot-devs/lichess-bot/blob/master/README.md#lichess-oauth
-for instructions.
+for instructions. You can ignore the `config.yaml` part.
 
 Once you have a token upgrade to a bot account with
 
