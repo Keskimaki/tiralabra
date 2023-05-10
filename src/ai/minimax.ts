@@ -37,6 +37,7 @@ const minimax = (
   alpha = -Infinity,
   beta = Infinity,
   isMaximizingPlayer = true,
+  noRandom = false,
 ): MinimaxResult => {
   updateCount()
 
@@ -49,7 +50,7 @@ const minimax = (
   let bestScore = isMaximizingPlayer ? -Infinity : Infinity
 
   const moves = possibleMoves(game, color)
-  moves.sort(() => 0.5 - Math.random())
+  if (!noRandom) moves.sort(() => 0.5 - Math.random())
 
   for (const possibleMove of moves) {
     const gameState = move(game, possibleMove)
